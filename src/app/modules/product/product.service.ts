@@ -16,8 +16,14 @@ const getAllProductByIdFromDB = async (productId: string) => {
   return result;
 };
 
+const getProductsBySearchTermFromDB = async (searchTerm: any) => {
+  const result = await Product.find({ name: new RegExp(searchTerm, 'i') });
+  return result;
+};
+
 export const productServices = {
   createProductIntoDB,
   getAllProductsFromDB,
   getAllProductByIdFromDB,
+  getProductsBySearchTermFromDB,
 };
