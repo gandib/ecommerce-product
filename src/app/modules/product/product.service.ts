@@ -6,9 +6,20 @@ const createProductIntoDB = async (productData: TProduct) => {
   return result;
 };
 
-const getAllProductsFromDB = async () => {
-  const result = await Product.find();
-  return result;
+const getAllProductsFromDB = async (searchTerm: any = null) => {
+  let result;
+  if (searchTerm) {
+    return (result = await Product.find({
+      $or: [
+        { name: new RegExp(searchTerm, 'i') },
+        { description: new RegExp(searchTerm, 'i') },
+        { category: new RegExp(searchTerm, 'i') },
+      ],
+    }));
+  } else {
+    result = await Product.find();
+    return result;
+  }
 };
 
 const getAllProductByIdFromDB = async (productId: string) => {
@@ -16,14 +27,8 @@ const getAllProductByIdFromDB = async (productId: string) => {
   return result;
 };
 
-const getProductsBySearchTermFromDB = async (searchTerm: any) => {
-  const result = await Product.find({ name: new RegExp(searchTerm, 'i') });
-  return result;
-};
-
 export const productServices = {
   createProductIntoDB,
   getAllProductsFromDB,
   getAllProductByIdFromDB,
-  getProductsBySearchTermFromDB,
 };

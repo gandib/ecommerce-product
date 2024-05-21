@@ -30,7 +30,16 @@ const getAllProducts = async (req: Request, res: Response) => {
     const { searchTerm }: any = req.query;
     let result;
     if (searchTerm) {
-      result = await productServices.getProductsBySearchTermFromDB(searchTerm);
+      result = await productServices.getAllProductsFromDB(searchTerm);
+
+      // response for not product found
+      if (result.length === 0) {
+        return res.status(200).json({
+          success: false,
+          message: 'Product not found!',
+        });
+      }
+
       res.status(200).json({
         success: true,
         message: `Products matching search term '${searchTerm}' fetched successfully!`,
@@ -59,6 +68,14 @@ const getProductById = async (req: Request, res: Response) => {
     const { productId } = req.params;
     // call service to send product id
     const result = await productServices.getAllProductByIdFromDB(productId);
+
+    // response for not product found
+    if (result === null) {
+      return res.status(200).json({
+        success: false,
+        message: 'Product not found!',
+      });
+    }
 
     // send response
     res.status(200).json({
