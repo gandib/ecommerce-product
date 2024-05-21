@@ -22,7 +22,7 @@ const getAllProductsFromDB = async (searchTerm: any = null) => {
   }
 };
 
-const getAllProductByIdFromDB = async (productId: string) => {
+const getProductByIdFromDB = async (productId: string) => {
   const result = await Product.findOne({ _id: productId });
   return result;
 };
@@ -44,7 +44,7 @@ const deleteProduct = async (productId: string) => {
 export const productServices = {
   createProductIntoDB,
   getAllProductsFromDB,
-  getAllProductByIdFromDB,
+  getProductByIdFromDB,
   updateProduct,
   deleteProduct,
 };

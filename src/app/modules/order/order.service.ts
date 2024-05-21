@@ -29,11 +29,21 @@ const createOrderIntoDB = async (orderData: TOrder) => {
   } else {
     throw new Error('Insufficient quantity available in inventory!');
   }
-
-  //   const result = await Order.create(orderData);
   return result;
+};
+
+const getAllOrder = async (email: any = null) => {
+  let result;
+  if (email) {
+    result = await Order.find({ email: email });
+    // console.log(result);
+    return result;
+  } else {
+    return (result = await Order.find());
+  }
 };
 
 export const orderServices = {
   createOrderIntoDB,
+  getAllOrder,
 };

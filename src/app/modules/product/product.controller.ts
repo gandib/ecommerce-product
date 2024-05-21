@@ -21,7 +21,6 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong!',
-      error: error.message,
     });
   }
 };
@@ -59,7 +58,6 @@ const getAllProducts = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong!',
-      error: error.message,
     });
   }
 };
@@ -70,7 +68,7 @@ const getProductById = async (req: Request, res: Response) => {
     // get product id
     const { productId } = req.params;
     // call service to send product id
-    const result = await productServices.getAllProductByIdFromDB(productId);
+    const result = await productServices.getProductByIdFromDB(productId);
 
     // response for not product found
     if (result === null) {
@@ -90,7 +88,6 @@ const getProductById = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong!',
-      error: error.message,
     });
   }
 };
@@ -114,7 +111,6 @@ const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong!',
-      error: error.message,
     });
   }
 };
@@ -142,7 +138,6 @@ const deleteProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Something went wrong!',
-      error: error.message,
     });
   }
 };
