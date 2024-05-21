@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import productValidationSchema from './product.validation';
 import { productServices } from './product.service';
 
+// Create product
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
@@ -25,6 +26,7 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+// Get All products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const { searchTerm }: any = req.query;
@@ -62,6 +64,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+// Get product by _id
 const getProductById = async (req: Request, res: Response) => {
   try {
     // get product id
@@ -92,8 +95,33 @@ const getProductById = async (req: Request, res: Response) => {
   }
 };
 
+// Update product by _id
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const updateDoc = req.body;
+    // get _id
+    const { productId } = req.params;
+    console.log(productId, updateDoc);
+    const result = await productServices.updateProduct(updateDoc, productId);
+
+    // send response
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something went wrong!',
+      error: error.message,
+    });
+  }
+};
+
 export const productControllers = {
   createProduct,
   getAllProducts,
   getProductById,
+  updateProduct,
 };
