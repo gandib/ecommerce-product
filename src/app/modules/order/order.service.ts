@@ -6,6 +6,11 @@ import { Order } from './order.model';
 const createOrderIntoDB = async (orderData: TOrder) => {
   const product = await Order.updateQuantity(orderData.productId);
   let result;
+  if (!product) {
+    throw new Error(
+      'ProductId is not valid or not found in product collection!',
+    );
+  }
   const newQuantity = product?.inventory?.quantity - orderData.quantity;
   if (
     orderData.quantity <= product?.inventory?.quantity &&
